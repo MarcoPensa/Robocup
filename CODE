@@ -14,10 +14,10 @@ const uint8_t SensorCount = 8;
 uint16_t sensorValues[SensorCount];
 
 //Motor A
-int ENA = 3; int IN1 = 22; int IN2 = 24;
+int ENA = 2; int IN1 = 22; int IN2 = 24;
 
 //Motor B
-int ENB = 2; int IN3 = 34; int IN4 = 32;
+int ENB = 3; int IN3 = 26; int IN4 = 28;
 
 L298NX2 motors(ENA, IN1, IN2, ENB, IN3, IN4);
 int lastError = 0;
@@ -25,7 +25,7 @@ int lastError = 0;
 void setup()
 {   
     qtr.setTypeAnalog();
-    qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
+    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5, A6, A7, A9, A10}, SensorCount);
 
     pinMode(ENA, OUTPUT);
     pinMode(IN1, OUTPUT);
