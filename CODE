@@ -9,6 +9,8 @@ QTRSensors qtr;
 #define SpeedTurn 150
 #define CheckPoint 800
 
+int Cal = 0;
+
 const uint8_t SensorCount = 8;
 // IR Sensors Count 
 uint16_t sensorValues[SensorCount];
@@ -43,7 +45,7 @@ void setup()
     digitalWrite(LED_BUILTIN, HIGH);
     delay(3000);
     
-    for (int i = 0; i < 400; i++)
+    for (Cal = 0; Cal < 1000; Cal++)
     {   
         motors.forwardA();
         motors.backwardB();
