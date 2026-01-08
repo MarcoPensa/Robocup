@@ -37,6 +37,7 @@ void setup()
     pinMode(IN4, OUTPUT);
 
     Serial.begin(9600);
+Serial.println("START");
     delay(500);
     
     pinMode(LED_BUILTIN, OUTPUT);
@@ -47,6 +48,7 @@ void setup()
     
     for (Cal = 0; Cal < 1000; Cal++)
     {   
+Serial.println(Cal);
         motors.forwardA();
         motors.backwardB();
         motors.setSpeed(SpeedTurn);
