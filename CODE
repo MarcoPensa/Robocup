@@ -9,8 +9,6 @@ QTRSensors qtr;
 #define SpeedTurn 150
 #define CheckPoint 800
 
-int Cal = 0;
-
 const uint8_t SensorCount = 8;
 // IR Sensors Count 
 uint16_t sensorValues[SensorCount];
@@ -27,7 +25,7 @@ int lastError = 0;
 void setup()
 {   
     qtr.setTypeAnalog();
-    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5, A6, A7, A9, A10}, SensorCount);
+    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5, A6, A7, A8}, SensorCount);
 
     pinMode(ENA, OUTPUT);
     pinMode(IN1, OUTPUT);
@@ -37,7 +35,7 @@ void setup()
     pinMode(IN4, OUTPUT);
 
     Serial.begin(9600);
-Serial.println("START");
+    Serial.println("START");
     delay(500);
     
     pinMode(LED_BUILTIN, OUTPUT);
@@ -46,12 +44,12 @@ Serial.println("START");
     digitalWrite(LED_BUILTIN, HIGH);
     delay(3000);
     
-    for (Cal = 0; Cal < 1000; Cal++)
+    for (int Cal = 0; Cal < 1000; Cal++)
     {   
-Serial.println(Cal);
+        Serial.println(Cal);
+        motors.setSpeed(SpeedTurn);
         motors.forwardA();
         motors.backwardB();
-        motors.setSpeed(SpeedTurn);
         qtr.calibrate();
         delay(20);
     }
