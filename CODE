@@ -25,7 +25,7 @@ int lastError = 0;
 void setup()
 {   
     qtr.setTypeAnalog();
-    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5, A6, A7, A8}, SensorCount);
+    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5, A6, A7, A8}, SensorCount);//Controllare i pin
 
     pinMode(ENA, OUTPUT);
     pinMode(IN1, OUTPUT);
@@ -51,9 +51,9 @@ void setup()
         motors.forwardA();
         motors.backwardB();
         qtr.calibrate();
-        delay(20);
+        delay(10);
     }
-
+    Serial.println("Calibration done!");
     digitalWrite(LED_BUILTIN, LOW);
     delay(3000); 
 }  
@@ -72,7 +72,8 @@ void followLine(){
       Serial.print('\t');
     }
     Serial.println(position);
-
+    delay(500);
+/*
     // too Right, Robot will go left
     if(position>3800)  
     {
@@ -108,5 +109,5 @@ void followLine(){
     
     motors.setSpeedA(rightMotorSpeed);
     motors.setSpeedB(leftMotorSpeed);
-    motors.forward();
+    motors.forward();*/
 }
