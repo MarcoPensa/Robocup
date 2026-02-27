@@ -9,7 +9,7 @@ QTRSensors qtr;
 #define SpeedTurn 150
 #define CheckPoint 800
 
-const uint8_t SensorCount = 8;
+const uint8_t SensorCount = 5;
 // IR Sensors Count 
 uint16_t sensorValues[SensorCount];
 
@@ -22,10 +22,13 @@ int ENB = 3; int IN3 = 26; int IN4 = 28;
 L298NX2 motors(ENA, IN1, IN2, ENB, IN3, IN4);
 int lastError = 0;
 
+//LEDs for calibration
+int LED_1 = 13;
+
 void setup()
 {   
     qtr.setTypeAnalog();
-    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5, A6, A7, A8}, SensorCount);//Controllare i pin
+    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5}, SensorCount);//Controllare i pin
 
     pinMode(ENA, OUTPUT);
     pinMode(IN1, OUTPUT);
@@ -38,20 +41,20 @@ void setup()
     Serial.println("START");
     delay(500);
     
-    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(LED_1, OUTPUT);
 
     // LED turns ON to indicate the start of the calibration
-    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_1, HIGH);
     delay(3000);
     
-    for (int Cal = 0; Cal < 1000; Cal++)
+    for (int Cal = 0; Cal < 500; Cal++)
     {   
         Serial.println(Cal);
         motors.setSpeed(SpeedTurn);
         motors.forwardA();
         motors.backwardB();
         qtr.calibrate();
-        delay(10);
+        delay(5);
     }
     Serial.println("Calibration done!");
     digitalWrite(LED_BUILTIN, LOW);
