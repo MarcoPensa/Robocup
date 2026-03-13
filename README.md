@@ -1,12 +1,12 @@
-# Robocup 2026
-All work made in Galilei
-Questa è la V1 di un progetto presentato alla robocup 2026 il progetto è stato costruito da un team di due studenti ma in gara ha ottenuto scarsi risultati a causa di problemi tecnici.
-Tuttavia, abbiamo imparato molto dall'esperienza e abbiamo deciso di continuare a lavorare sul progetto per migliorarlo in vista delle future competizioni.
-La V1 del progetto includeva un robot autonomo progettato per navigare. 
-Il team ha utilizzato una combinazione di sensori,ma abbiamo incontrato difficoltà nel coordinare tutte le componenti in modo efficace durante la gara (in cui abbiamo ottenuto solo 15 punti 5/5/5). Nonostante le sfide, siamo determinati a perfezionare il nostro progetto e a tornare più forti l'anno prossimo.
-
-Per completare il progetto sono necessari diversi componenti elettronici e due tavole di legno 145*155.25 mm.
-Se volete remplicare chiedere informazioni.
+#Progetto RoboCup 2026 - V1 (Galilei)
+Questa è la V1 di un progetto presentato alla RoboCup 2026, sviluppato da un team di due studenti. Nonostante il risultato in gara sia stato penalizzato da alcuni problemi tecnici (totalizzando 15 punti con una serie di 5/5/5), l'esperienza è stata fondamentale per la nostra crescita tecnica.
+#Descrizione del Progetto
+Il robot è un sistema autonomo progettato per la navigazione di ambienti.
+La prima versione integrava una combinazione di sensori per il rilevamento dell'ambiente, ma abbiamo riscontrato criticità nel coordinamento software delle componenti durante le fasi più concitate della gara.
+#Sviluppi Futuri
+Siamo determinati a perfezionare l'architettura del robot e a migliorare l'integrazione dei sistemi per tornare più competitivi il prossimo anno.
+#Specifiche per il Replicability
+Per chi fosse interessato a replicare il progetto, sono necessari diversi componenti elettronici e due tavole di legno con dimensioni di $145 \times 155,25$ mm.Nota: Se desiderate maggiori informazioni sui componenti specifici o sugli schemi di montaggio, non esitate a chiedere!
 
 See you soon Robocup 2027...
 
