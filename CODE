@@ -5,8 +5,9 @@ QTRSensors qtr;
 #define Kp 0.018
 #define Kd 0.0001
 #define MaxSpeed 150 // 0-255
-#define BaseSpeed 100 // 0-255
+#define BaseSpeed 200 // 0-255
 #define CheckPoint 800
+
 
 const uint8_t SensorCount = 5;
 // IR Sensors Count 
@@ -22,19 +23,25 @@ L298NX2 motors(ENA, IN1, IN2, ENB, IN3, IN4);
 int lastError = 0;
 
 //LEDs for calibration
-int LED_1 = 13;
-int LED_2 = 12;
-//add more
+int LED_W = 30;
+int LED_R = 32;
+int LED_Y = 34;
+int LED_G = 36;
+
+//Button pin
+int Button_Reset = 31;
+int Button_SW = 33;
+
 
 int P = 0; // P per posizione
-int min = 200; // Threshold for (Black) line detection
-int SpeedE = 150; // Speed for big error
-int Speede = 100; // Speed for small error
+//int 0 = 400; // Threshold for (Black) line detection
+int SpeedE = 135; // Speed for big error
+int Speede = 170; // Speed for small error
+int SpeedEe = 200; // Speed for very big error
 
 void setup()
 {   
-    qtr.setTypeAnalog();
-    qtr.setSensorPins((const uint8_t[]){A1, A2, A3, A4, A5}, SensorCount);
+
 
     pinMode(ENA, OUTPUT);
     pinMode(IN1, OUTPUT);
@@ -42,8 +49,23 @@ void setup()
     pinMode(ENB, OUTPUT);
     pinMode(IN3, OUTPUT);
     pinMode(IN4, OUTPUT);
-    pinMode(LED_1, OUTPUT);
-    pinMode(LED_2, OUTPUT);
+
+    pinMode(LED_R, OUTPUT);
+    pinMode(LED_Y, OUTPUT);
+    pinMode(LED_G, OUTPUT);
+    pinMode(LED_W, OUTPUT);
+
+    pinMode(Button_Reset, INPUT);
+    pinMode(Button_SW, INPUT);
+
+    pinMode(8, INPUT);
+    pinMode(9, INPUT);
+    pinMode(10, INPUT);
+    pinMode(11, INPUT);
+    pinMode(12, INPUT);
+
+
+
 
     Serial.begin(9600);
     Serial.println("START");
@@ -52,165 +74,148 @@ void setup()
     
 
     // LED turns ON to indicate the start of the calibration
-    digitalWrite(LED_1, HIGH);
+    digitalWrite(LED_W, HIGH);
 
-    
+    /*
     for (int Cal = 0; Cal < 500; Cal++)
     {   
         Serial.println(Cal);
-        motors.setSpeed(BaseSpeed);
+        motors.setSpeed(Speede);
         motors.forwardA();
         motors.backwardB();
         qtr.calibrate();
         delay(5);
     }
     Serial.println("Calibration done!");
-    digitalWrite(LED_1, LOW);
-    delay(3000); 
+    digitalWrite(LED_W, LOW);
+    delay(3000); */
 }  
 
 void loop()
 {  
 
-    int  S1 = analogRead(A1);
-    int  S2 = analogRead(A2);
-    int  S3 = analogRead(A3); 
-    int  S4 = analogRead(A4);
-    int  S5 = analogRead(A5);
+    int  S1= digitalRead(8);
+    int  S2= digitalRead(9);
+    int  S3= digitalRead(10); 
+    int  S4= digitalRead(11);
+    int  S5= digitalRead(12);
+ 
+    int Button_Reset1 = digitalRead(Button_Reset);
+    Serial.print("Bottone:");Serial.println(Button_Reset1);
+
+    if (Button_Reset1 == HIGH)
+    {
+        motors.stop();
+        while (Button_Reset == HIGH); // Wait until the button is released
+        delay(500); // Debounce delay
+        P = 0; // Reset position variable
+    }
+
+   if (Button_SW == HIGH)
+    {
+        int Mode = 1 - Mode; // Toggle between 0 and 1
+    }
+    
+    int Button_SW = digitalRead(Button_SW);
+    Serial.print("Mode:");Serial.println(Button_SW);
 
     // Print the sensor values to the Serial Monitor
-    Serial.print(S1); Serial.print("    ");Serial.print(S2);Serial.print("    "); Serial.print(S3); Serial.print("    ");Serial.print(S4); Serial.print("    ");Serial.println(S5);
+    Serial.print(S1); Serial.print("  "); Serial.print(S2); Serial.print("  "); Serial.print(S3); Serial.print("  ");Serial.print(S4); Serial.print("  "); Serial.println(S5);
 
-    if  (S3 > min ){
-        digitalWrite(LED_2, HIGH);
+    if  (S3 = 0 ){
+        digitalWrite(LED_G, HIGH);
     }
     else {
-        digitalWrite(LED_2, LOW);
+        digitalWrite(LED_G, LOW);
     }
 
-    if  (S2 >min)
+    if  (S2 == 0)
     {
-        P -- ;
-        Serial.print("2");
+    P = P-1;
+      Serial.print("S2");
     }
 
-    if  (S4 > min)
+    if  (S4 == 0)
     {
-        P ++;
-        Serial.println("4");
+    P = P+1;
+    Serial.print("S4");
     }
 
-    if  (S1 > min){
-        P --;
-        P --;
-        P --;
-        Serial.println("1");
+    if  (S1 == 0){
+    P = P-3;
+      Serial.print("S1");
     }
 
-    if  (S5 > min){
-        P ++;
-        P ++;
-        P ++;
-        Serial.println("5");
+    if  (S5 == 0){
+      P = P+3;
+
+      Serial.print("S5");
+
     }
-
-    if(P == 4){
-        P = 3;
-    }
-
-    if(P == -4){
-        P = -3;
-    }
-
-
     //  -3    -1   0   1   3
 
-
-
+    Serial.println(P);
     switch (P){
+
+        case -4:
+            motors.setSpeed(SpeedEe);
+            motors.forwardB();
+            motors.backwardA();
+            digitalWrite(LED_R, HIGH);
+            digitalWrite(LED_Y, HIGH);
+
+        break;
 
         case -3:
             motors.setSpeed(SpeedE);
             motors.forwardB();
             motors.backwardA();
+            digitalWrite(LED_R, HIGH);
+            digitalWrite(LED_Y, LOW);
+
         break;
 
         case -1:
             motors.setSpeed(Speede);
             motors.forwardB();
             motors.backwardA();
+            digitalWrite(LED_Y, HIGH);
+            digitalWrite(LED_R, LOW);
+
         break;
 
         case 0:
             motors.setSpeed(BaseSpeed);
             motors.forward();
+            digitalWrite(LED_G, HIGH);
         break;
 
         case 1:
             motors.setSpeed(Speede);
             motors.forwardA();
             motors.backwardB();    
+            digitalWrite(LED_Y, HIGH);
+            digitalWrite(LED_R, LOW);
         break;
 
         case 3:
             motors.setSpeed(SpeedE);
             motors.forwardA();
             motors.backwardB();
+            digitalWrite(LED_R, HIGH);
+            digitalWrite(LED_Y, LOW);
+        break;
+
+        case 4:
+            motors.setSpeed(SpeedEe);
+            motors.forwardB();
+            motors.backwardA();
+            digitalWrite(LED_R, HIGH);
+            digitalWrite(LED_Y, HIGH);
+
         break;
 
     }
-    Serial.println(P);
 
-    //delay(1000);
     P=0;
 }
-
-/*
-void followLine(){
-
-    uint16_t position = qtr.readLineBlack(sensorValues);  
-    for (uint8_t i = 0; i < SensorCount; i++)
-    {
-      //bSerial.println(sensorValues[i]);
-      
-    }
-    Serial.println(position);
-    delay(500);
-
-    // too Right, Robot will go left
-    if(position>3800)  
-    {
-        motors.setSpeed(BaseSpeed);
-        motors.forwardA();
-        motors.backwardB();
-        return;    
-    }
-
-    // too Left, Robot will go right
-    if(position<2900)
-    {  
-        motors.setSpeed(BaseSpeed);
-        motors.forwardB();
-        motors.backwardA();
-        return;
-    }
-
-    int error = position - 3500;
-    int motorSpeed = Kp * error + Kd * (error - lastError);
-    lastError = error;
-
-    Serial.print("Error: ");
-    Serial.println(error);
-
-    int rightMotorSpeed = BaseSpeed + motorSpeed;
-    int leftMotorSpeed = BaseSpeed - motorSpeed;
-  
-    if (rightMotorSpeed > MaxSpeed ) rightMotorSpeed = MaxSpeed; 
-    if (leftMotorSpeed > MaxSpeed ) leftMotorSpeed = MaxSpeed;
-    if (rightMotorSpeed < 0)rightMotorSpeed = 0;    
-    if (leftMotorSpeed < 0)leftMotorSpeed = 0;
-    
-    motors.setSpeedA(rightMotorSpeed);
-    motors.setSpeedB(leftMotorSpeed);
-    motors.forward();
-}*/
