@@ -5,6 +5,9 @@ Tuttavia, abbiamo imparato molto dall'esperienza e abbiamo deciso di continuare 
 La V1 del progetto includeva un robot autonomo progettato per navigare. 
 Il team ha utilizzato una combinazione di sensori,ma abbiamo incontrato difficoltà nel coordinare tutte le componenti in modo efficace durante la gara (in cui abbiamo ottenuto solo 15 punti 5/5/5). Nonostante le sfide, siamo determinati a perfezionare il nostro progetto e a tornare più forti l'anno prossimo.
 
+Per completare il progetto sono necessari diversi componenti elettronici e due tavole di legno 145*155.25 mm.
+Se volete remplicare chiedere informazioni.
+
 See you soon Robocup 2027...
 
 Stealing from:
