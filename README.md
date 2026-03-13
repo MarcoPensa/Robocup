@@ -6,7 +6,8 @@ La prima versione integrava una combinazione di sensori per il rilevamento dell'
 # Sviluppi Futuri
 Siamo determinati a perfezionare l'architettura del robot e a migliorare l'integrazione dei sistemi per tornare più competitivi il prossimo anno.
 # Specifiche per il Replicability
-Per chi fosse interessato a replicare il progetto, sono necessari diversi componenti elettronici e due tavole di legno con dimensioni di $145 \times 155,25$ mm.Nota: Se desiderate maggiori informazioni sui componenti specifici o sugli schemi di montaggio, non esitate a chiedere!
+Per chi fosse interessato a replicare il progetto, sono necessari diversi componenti elettronici, due tavole di legno con dimensioni di $145 \times 155,25$ mm, alcuni pezzi Lego.
+Nota: Se desiderate maggiori informazioni sui componenti specifici o sugli schemi di montaggio, non esitate a chiedere!
 
 See you soon Robocup 2027...
 
