@@ -1,11 +1,13 @@
 #include <L298NX2.h>
 #include <QTRSensors.h>
+#include <Ultrasonic.h>
 QTRSensors qtr;
 
 #define Kp 0.018
 #define Kd 0.0001
 #define MaxSpeed 150 // 0-255
-#define BaseSpeed 200 // 0-255
+#define BaseSpeed 200
+ // 0-255
 #define CheckPoint 800
 
 
@@ -31,6 +33,11 @@ int LED_G = 36;
 //Button pin
 int Button_Reset = 31;
 int Button_SW = 33;
+
+int trig = 6;
+int echo = 7;
+
+Ultrasonic ultrasonic(trig, echo);
 
 
 int P = 0; // P per posizione
@@ -100,6 +107,14 @@ void loop()
     int  S4= digitalRead(11);
     int  S5= digitalRead(12);
  
+    int D = ultrasonic.distanceRead();
+    if (D > 100){
+    D = 100;
+    }
+
+    Serial.print("Distance in cm: ");
+  Serial.println(D);
+
     int Button_Reset1 = digitalRead(Button_Reset);
     Serial.print("Bottone:");Serial.println(Button_Reset1);
 
@@ -208,8 +223,8 @@ void loop()
 
         case 4:
             motors.setSpeed(SpeedEe);
-            motors.forwardB();
-            motors.backwardA();
+            motors.forwardA();
+            motors.backwardB();
             digitalWrite(LED_R, HIGH);
             digitalWrite(LED_Y, HIGH);
 
